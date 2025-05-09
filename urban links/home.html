@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Urban Links</title>
+	<style>
+		body {
+			background-color: #f0f0f0;
+			font-family: Arial, sans-serif;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+            background-image: url('file:///C:/Users/user/OneDrive/Desktop/urban links/use.jpg'); 
+            background-size: cover; 
+            background-position: center;
+            margin: 0;
+            position: relative;
+		}
+       
+		#title {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #000;
+            background-image: linear-gradient(to top, #757866,#b9bcaf );
+            display: inline-block;
+        }
+		
+		.letter {
+			display: inline-block;
+			animation: float 5s ease-in-out infinite;
+			cursor: default;
+		}
+		
+		.letter:nth-child(odd) {
+			animation-delay: 0s;
+		}
+		
+		.letter:nth-child(even) {
+			animation-delay: 4s;
+		}
+		
+		@keyframes float {
+			0% {
+				transform: translateY(20px);
+				opacity: 0;
+			}
+			50% {
+				transform: translateY(-10px);
+				opacity: 1;
+			}
+			100% {
+				transform: translateY(20px);
+				opacity: 0;
+			}
+		}
+		
+		.links {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			background-color: #97998a;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+		
+		.links a {
+			color: #fff;
+			text-decoration: none;
+			margin: 0 10px;
+		}
+		
+		.signin-btn {
+			position: absolute;
+			top: 20px;
+			right: 10px;
+			background-color:#f0f0f0;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		
+		.signup-btn {
+			position: absolute;
+			top: 20px;
+			right: 90px;
+			background-color: #f0f0f0;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		/* Watermark Styles */
+		.watermark {
+			position: fixed;
+			bottom: 10px;
+			right: 10px;
+			color: rgba(255,255,255,0.2);
+			font-size: 12px;
+			user-select: none;
+			padding: 5px;
+			transition: all 0.3s ease;
+			z-index: 1000;
+		}
+
+		/* Hidden Button (initially invisible) */
+		.hidden-btn {
+			position: fixed;
+			top: 20px;
+			left: 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 10px 15px;
+			cursor: pointer;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			z-index: 999;
+			font-weight: bold;
+		}
+
+		.hidden-btn.visible {
+			opacity: 1;
+		}
+	</style>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+	<!-- Hidden button - now links to marketing.html -->
+	<button class="hidden-btn" id="hiddenBtn" onclick="window.location.href='file:///C:/Users/user/OneDrive/Desktop/urban%20links/marketing.html'">Marketing Portal</button>
+
+	<!-- Watermark -->
+	<div class="watermark" id="watermark">© Urban Links</div>
+
+	<div id="title">
+		<span class="letter" id="letter-U">U</span>
+		<span class="letter" id="letter-r">r</span>
+		<span class="letter" id="letter-b">b</span>
+		<span class="letter" id="letter-a">a</span>
+		<span class="letter" id="letter-n">n</span>
+		<span class="letter" id="letter-L">L</span>
+		<span class="letter" id="letter-i">i</span>
+		<span class="letter" id="letter-n2">n</span>
+		<span class="letter" id="letter-k">k</span>
+		<span class="letter" id="letter-s">s</span>
+	</div>
+	<button class="signin-btn"><a href="file:///C:/Users/user/OneDrive/Desktop/urban%20links/login.html">Login</a></button>
+    <button class="signup-btn"><a href="file:///C:/Users/user/OneDrive/Desktop/urban%20links/sign%20in.html">signup</a></button>
+          
+	<div class="links">  
+<a href="file:///C:/Users/user/OneDrive/Desktop/urban%20links/Viewing.html ">Viewing</a>
+  
+		<a href="file:///C:/Users/user/OneDrive/Desktop/urban%20links/contact%20us%20.html">Contact Us</a>
+	</div>
+
+	<script>
+		// Secret letter combination
+		const secretLetters = ['a', 'i']; // Must click 'a' then 'i' in order
+		let clickedSequence = [];
+		let watermarkVisible = true;
+		const hiddenBtn = document.getElementById('hiddenBtn');
+		const watermark = document.getElementById('watermark');
+
+		// Get all letter elements
+		const letterElements = {
+			'a': document.getElementById('letter-a'),
+			'i': document.getElementById('letter-i')
+		};
+
+		// Add click handlers to the secret letters
+		letterElements['a'].addEventListener('click', handleLetterClick);
+		letterElements['i'].addEventListener('click', handleLetterClick);
+
+		function handleLetterClick(e) {
+			const letter = e.target.id.split('-')[1];
+			
+			// Check if this is the next letter in the sequence
+			if (letter === secretLetters[clickedSequence.length]) {
+				clickedSequence.push(letter);
+				
+				// Visual feedback (optional)
+				e.target.style.color = '#ff0';
+				setTimeout(() => {
+					e.target.style.color = '';
+				}, 300);
+				
+				// If full sequence is completed
+				if (clickedSequence.length === secretLetters.length) {
+					// Toggle watermark visibility
+					watermarkVisible = !watermarkVisible;
+					watermark.style.opacity = watermarkVisible ? '0.2' : '0';
+					
+					// Show/hide the hidden button
+					hiddenBtn.classList.toggle('visible');
+					
+					// Reset the sequence
+					setTimeout(() => {
+						clickedSequence = [];
+					}, 1000);
+				}
+			} else {
+				// Wrong sequence, reset
+				clickedSequence = [];
+			}
+		}
+	</script>
+</body>
+</html>
